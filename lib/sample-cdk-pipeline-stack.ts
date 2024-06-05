@@ -39,8 +39,6 @@ export class SampleCdkPipelineStack extends cdk.Stack {
       env: { account: "339713083299", region: "us-east-1" },
     });
 
-    pipeline.addStage(prodStage);
-
     pipeline.addStage(prodStage, {
       pre: [new ManualApprovalStep("PromoteToProd")],
     });
