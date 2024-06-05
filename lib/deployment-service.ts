@@ -5,7 +5,7 @@ import { S3Origin } from "aws-cdk-lib/aws-cloudfront-origins";
 import { BlockPublicAccess, Bucket } from "aws-cdk-lib/aws-s3";
 import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 
-const path = "./sample/build";
+const path = "./reactapp/build";
 
 export class DeploymentService extends Construct {
   constructor(scope: Construct, id: string) {

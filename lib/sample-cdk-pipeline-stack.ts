@@ -8,6 +8,7 @@ import {
 } from "aws-cdk-lib/pipelines";
 import { Construct } from "constructs";
 import { SampleCdkPipelineStage } from "./sample-cdk-pipeline-stage";
+import { BuildSpec } from "aws-cdk-lib/aws-codebuild";
 
 export class SampleCdkPipelineStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -26,8 +27,6 @@ export class SampleCdkPipelineStack extends cdk.Stack {
           }
         ),
         commands: [
-          "npm install -g typescript",
-          "node --version",
           "cd reactapp",
           "npm ci",
           "npm run build",
@@ -37,6 +36,17 @@ export class SampleCdkPipelineStack extends cdk.Stack {
           "npx cdk synth",
         ],
       }),
+      synthCodeBuildDefaults: {
+        partialBuildSpec: BuildSpec.fromObject({
+          phases: {
+            install: {
+              "runtime-versions": {
+                nodejs: "20",
+              },
+            },
+          },
+        }),
+      },
     });
 
     pipeline.addStage(
