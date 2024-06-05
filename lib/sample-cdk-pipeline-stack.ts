@@ -28,7 +28,7 @@ export class SampleCdkPipelineStack extends cdk.Stack {
         commands: [
           "npm install -g typescript",
           "node --version",
-          "cd sample",
+          "cd reactapp",
           "npm ci",
           "npm run build",
           "cd ..",
