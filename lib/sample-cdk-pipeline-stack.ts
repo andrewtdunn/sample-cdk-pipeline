@@ -26,10 +26,9 @@ export class SampleCdkPipelineStack extends cdk.Stack {
           }
         ),
         commands: [
-          "cd react/test-react",
+          "cd react",
           "npm ci",
           "npm run build",
-          "cd ..",
           "cd ..",
           "npm ci",
           "npm run build",
