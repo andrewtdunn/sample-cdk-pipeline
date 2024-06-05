@@ -33,5 +33,11 @@ export class SampleCdkPipelineStack extends cdk.Stack {
         env: { account: "730335377532", region: "us-east-1" },
       })
     );
+
+    pipeline.addStage(
+      new SampleCdkPipelineStage(this, "prod", {
+        env: { account: "339713083299", region: "us-east-1" },
+      })
+    );
   }
 }
