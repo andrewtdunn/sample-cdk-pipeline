@@ -26,27 +26,8 @@ export class SampleCdkPipelineStack extends cdk.Stack {
               "arn:aws:codestar-connections:us-east-1:637423577773:connection/78b54ada-1f46-4e0d-8b5c-572f1c8ee882",
           }
         ),
-        commands: [
-          // "cd reactapp",
-          // "npm ci",
-          // "npm run build",
-          // "cd ..",
-          "npm ci",
-          "npm run build",
-          "npx cdk synth",
-        ],
+        commands: ["npm ci", "npm run build", "npx cdk synth"],
       }),
-      synthCodeBuildDefaults: {
-        partialBuildSpec: BuildSpec.fromObject({
-          phases: {
-            install: {
-              "runtime-versions": {
-                nodejs: "20",
-              },
-            },
-          },
-        }),
-      },
     });
 
     pipeline.addStage(
