@@ -6,7 +6,7 @@ import {
   CodePipeline,
 } from "aws-cdk-lib/pipelines";
 import { Construct } from "constructs";
-import { pipeline } from "stream";
+import { SampleCdkPipelineStage } from "./sample-cdk-pipeline-stage";
 
 export class SampleCdkPipelineStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -14,6 +14,7 @@ export class SampleCdkPipelineStack extends cdk.Stack {
 
     const pipeline = new CodePipeline(this, "Pipeline", {
       pipelineName: "SampleCdkPipeline",
+      crossAccountKeys: true,
       synth: new ShellStep("Synth", {
         input: CodePipelineSource.connection(
           "andrewtdunn/sample-cdk-pipeline",
@@ -26,5 +27,11 @@ export class SampleCdkPipelineStack extends cdk.Stack {
         commands: ["npm ci", "npm run build", "npx cdk synth"],
       }),
     });
+
+    pipeline.addStage(
+      new SampleCdkPipelineStage(this, "test", {
+        env: { account: "730335377532", region: "us-east-1" },
+      })
+    );
   }
 }
