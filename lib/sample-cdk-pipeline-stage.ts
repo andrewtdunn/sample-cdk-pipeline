@@ -1,6 +1,7 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
 import { SampleCdkPipelineStackLambdaStack } from "./sample-cdk-pipeline-lambda-stack";
+import { DeployReactAppStack } from "./deploy-react-app-stack";
 
 export class SampleCdkPipelineStage extends cdk.Stage {
   constructor(scope: Construct, id: string, props?: cdk.StageProps) {
@@ -10,5 +11,7 @@ export class SampleCdkPipelineStage extends cdk.Stage {
       this,
       "SampleCdkPipelineStackLambdaStack"
     );
+
+    const reactStack = new DeployReactAppStack(this, "DeployReactAppStack");
   }
 }
