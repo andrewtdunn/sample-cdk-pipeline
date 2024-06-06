@@ -14,11 +14,11 @@ export class SampleCdkPipelineStack extends cdk.Stack {
     super(scope, id, props);
 
     const pipeline = new CodePipeline(this, "Pipeline", {
-      pipelineName: "SampleCdkPipelineTest7",
+      pipelineName: "SampleCdkPipelineTest8",
       crossAccountKeys: true,
       synth: new ShellStep("Synth", {
         input: CodePipelineSource.connection(
-          "andrewtdunn/sample-cdk-pipeline8",
+          "andrewtdunn/sample-cdk-pipeline",
           "main",
           {
             connectionArn:
