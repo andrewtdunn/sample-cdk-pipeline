@@ -1,3 +1,4 @@
+import { Distribution } from "aws-cdk-lib/aws-cloudfront";
 import * as cdk from "aws-cdk-lib";
 import { Code } from "aws-cdk-lib/aws-lambda";
 import {
@@ -40,7 +41,7 @@ export class SampleCdkPipelineStack extends cdk.Stack {
       }),
     });
 
-    pipeline.addStage(
+    const stage = pipeline.addStage(
       new SampleCdkPipelineStage(this, "test", {
         env: { account: "730335377532", region: "us-east-1" },
       })
@@ -51,7 +52,11 @@ export class SampleCdkPipelineStack extends cdk.Stack {
     });
 
     pipeline.addStage(prodStage, {
-      pre: [new ManualApprovalStep("PromoteToProd")],
+      pre: [
+        new ManualApprovalStep("PromoteToProd", {
+          comment: "Promote to prod?",
+        }),
+      ],
     });
   }
 }
