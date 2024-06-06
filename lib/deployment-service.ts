@@ -16,20 +16,32 @@ export class DeploymentService extends Construct {
       removalPolicy: RemovalPolicy.DESTROY,
     });
 
-    new BucketDeployment(this, "ReactBucketDeployment", {
-      sources: [Source.asset(path)],
-      destinationBucket: bucket,
-    });
-
     const distribution = new Distribution(this, "Distribution", {
       defaultBehavior: {
         origin: new S3Origin(bucket),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
+      defaultRootObject: "index.html",
+      errorResponses: [
+        {
+          httpStatus: 404,
+          responseHttpStatus: 200,
+          responsePagePath: "/index.html",
+        },
+      ],
+    });
+
+    new BucketDeployment(this, "ReactBucketDeployment", {
+      sources: [Source.asset(path)],
+      destinationBucket: bucket,
+      distribution,
+      distributionPaths: ["/*"],
     });
 
     new CfnOutput(this, "DistributionDomainName", {
       value: distribution.domainName,
+      description: "The distribution URL",
+      exportName: "CloudfrontURL",
     });
   }
 }
