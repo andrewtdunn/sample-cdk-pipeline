@@ -28,6 +28,8 @@ export class SampleCdkPipelineStack extends cdk.Stack {
         commands: [
           "cd reactapp",
           "ls",
+          "ls src",
+          "pwd",
           "npm install --legacy-peer-deps",
           "npm run build",
           "cd ..",
