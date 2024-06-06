@@ -25,7 +25,14 @@ export class SampleCdkPipelineStack extends cdk.Stack {
               "arn:aws:codestar-connections:us-east-1:637423577773:connection/78b54ada-1f46-4e0d-8b5c-572f1c8ee882",
           }
         ),
-        commands: ["npm ci", "npm run build", "npx cdk synth"],
+        commands: [
+          "cd reactapp",
+          "ls",
+          "cd ..",
+          "npm ci",
+          "npm run build",
+          "npx cdk synth",
+        ],
       }),
     });
 
