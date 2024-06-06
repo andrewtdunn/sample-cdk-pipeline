@@ -33,7 +33,7 @@ export class SampleCdkPipelineStack extends cdk.Stack {
           "pwd",
           "npm install --legacy-peer-deps",
           "npm run build",
-          "cd ..",
+          "cd ../infra",
           "npm ci",
           "npm run build",
           "npx cdk synth",
