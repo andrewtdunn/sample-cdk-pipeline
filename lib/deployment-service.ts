@@ -11,14 +11,15 @@ export class DeploymentService extends Construct {
   constructor(scope: Construct, id: string) {
     super(scope, id);
 
-    const bucket = new Bucket(this, "ReactBucket", {
+    const hostingBucket = new Bucket(this, "ReactBucket", {
+      autoDeleteObjects: true,
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       removalPolicy: RemovalPolicy.DESTROY,
     });
 
-    const distribution = new Distribution(this, "Distribution", {
+    const distribution = new Distribution(this, "CloudfrontDistribution", {
       defaultBehavior: {
-        origin: new S3Origin(bucket),
+        origin: new S3Origin(hostingBucket),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
       },
       defaultRootObject: "index.html",
@@ -33,7 +34,7 @@ export class DeploymentService extends Construct {
 
     new BucketDeployment(this, "ReactBucketDeployment", {
       sources: [Source.asset(path)],
-      destinationBucket: bucket,
+      destinationBucket: hostingBucket,
       distribution,
       distributionPaths: ["/*"],
     });
@@ -42,6 +43,12 @@ export class DeploymentService extends Construct {
       value: distribution.domainName,
       description: "The distribution URL",
       exportName: "CloudfrontURL",
+    });
+
+    new CfnOutput(this, "BucketName", {
+      value: hostingBucket.bucketName,
+      description: "The name of the S3 bucket",
+      exportName: "BucketName",
     });
   }
 }
