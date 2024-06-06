@@ -15,7 +15,7 @@ export class SampleCdkPipelineStack extends cdk.Stack {
     super(scope, id, props);
 
     const pipeline = new CodePipeline(this, "Pipeline", {
-      pipelineName: "SampleCdkPipelineTest10",
+      pipelineName: "SampleCdkPipelineTest11",
       crossAccountKeys: true,
       synth: new ShellStep("Synth", {
         input: CodePipelineSource.connection(
@@ -35,6 +35,7 @@ export class SampleCdkPipelineStack extends cdk.Stack {
           "npm run build",
           "npx cdk synth",
         ],
+        primaryOutputDirectory: "infra/cdk.out",
       }),
     });
 
